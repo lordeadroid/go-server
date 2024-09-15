@@ -2,18 +2,16 @@ package main
 
 import (
 	"fmt"
+	"handlers/handlers"
 	"net/http"
 )
 
-func helloHandler(res http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(res, "Hello, World!")
-}
-
 func main() {
-	http.HandleFunc("/", helloHandler)
+	PORT := 8000
+	mux := http.NewServeMux()
 
-	fmt.Println("Starting server on PORT: 8000")
-	if err := http.ListenAndServe(":8000", nil); err != nil {
-		fmt.Printf("Error starting server: %s\n", err)
-	}
+	mux.HandleFunc("/next-pos", handlers.GetNextPosition)
+
+	fmt.Println("Server started listing on PORT:", PORT)
+	http.ListenAndServe(fmt.Sprintf(":%d", PORT), mux)
 }
