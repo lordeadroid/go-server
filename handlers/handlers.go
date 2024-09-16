@@ -9,8 +9,7 @@ import (
 	"time"
 )
 
-func getRandomNumber() int {
-	max := 8
+func getRandomNumber(max int) int {
 	min := 0
 	source := rand.NewSource(time.Now().UnixNano())
 	r := rand.New(source)
@@ -18,14 +17,21 @@ func getRandomNumber() int {
 	return r.Intn(max-min+1) + min
 }
 
-func nextPos(state []string) int {
-	pos := getRandomNumber()
-
-	if state[pos] == "" {
-		return pos
+func getAvailabePositions(state []string) []int {
+	var indices []int
+	for index, element := range state {
+		if element == "" {
+			indices = append(indices, index)
+		}
 	}
+	return indices
+}
 
-	return nextPos(state)
+func nextPos(state []string) int {
+	availabePositions := getAvailabePositions(state)
+	pos := getRandomNumber(len(availabePositions) - 1)
+
+	return availabePositions[pos]
 }
 
 func GetNextPosition(res http.ResponseWriter, req *http.Request) {
