@@ -39,16 +39,6 @@ func GetNextPosition(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 	res.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 
-	if req.Method == http.MethodOptions {
-		res.WriteHeader(http.StatusOK)
-		return
-	}
-
-	if req.Method != http.MethodPost {
-		http.Error(res, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
 	body, err := io.ReadAll(req.Body)
 	if err != nil {
 		http.Error(res, "Error reading request body", http.StatusInternalServerError)
