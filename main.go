@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"handlers/handlers"
+	"go-server/handlers"
 	"net/http"
 )
 
